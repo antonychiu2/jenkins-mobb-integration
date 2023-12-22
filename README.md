@@ -41,11 +41,12 @@ The next step is to load them into Jenkins Credentials. To do so, go to "Dashboa
 
 |Credential Entry  |Credential Kind |ID |
 | ----------------- | --------------- | -- |
-| GitHub Personal Access Token (PAT)  | Secret text | `your github username` |
+| GitHub Personal Access Token (PAT)  | Secret text | your github username goes here |
 | Mobb API Key  | Secret text | `MOBB_API_KEY` |
 | Snyk API Key  | Secret text | `SNYK_API_KEY` |
 
 The result should look similar to this:
+
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/801d1290-9429-4423-861f-c101a1bc5b70)
 
 
