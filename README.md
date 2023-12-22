@@ -89,3 +89,110 @@ To verify that the Webhook is able to connect to Jenkins, go to "Recent Deliveri
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/62496a31-5a96-4ce8-becc-5ef0efa05d6b)
 
 We are finally done with the infrastructure-related configurations! Next, we will move onto configuring the actual pipeline. 
+
+## Jenkins - Creating the pipeline
+
+We will create the pipeline using Jenkins "Pipeline" project type.  In your Jenkins Dashboard, click on "New Item" and select "Pipeline". 
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/143a7280-3df1-47a1-9020-10d75f346795)
+
+In the Pipeline configuration page, go to "GitHub Project". Provide your GitHub project URL here. 
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/e0b6a48a-050e-45fd-b8c8-09d461d598b2)
+
+Next, go to "Build Triggers", and locate "GitHub Pull Request Builder". 
+
+For the GitHub API Credentials, click on the drop down to select your GitHub credential. 
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/edd0f2c8-ab2b-4653-a164-9c2ff35309af)
+
+Under the "GitHub Pull Request Builder" -> **Advanced** section, the following values were used:
+
+|Name  |Value |Explanation |
+| ----------------- | --------------- | -- |
+|Crontab line  | * * * * * | This value will cause Jenkins to check for Webhook every minute. Modify this as needed. |
+| White list  | <enter your GitHub Username> | |
+
+Under the "GitHub Pull Request Builder" -> **Trigger Setup** section, the following values were used:
+|Name  |Value |Explanation |
+| ----------------- | --------------- | -- |
+|Commit Status Context  | Jenkins Pipeline | This will appear in GitHub commit status message |
+
+Under the "GitHub Pull Request Builder" -> Trigger Setup -> **Commit Status Build Result** section, add 2 sections with the following values
+
+For the first section:
+|Name  |Value |Explanation |
+| ----------------- | --------------- | -- |
+|Build Result  | Success |  |
+|Message  | SAST Scan Complete - No issues found |  |
+
+For the second section:
+|Name  |Value |Explanation |
+| ----------------- | --------------- | -- |
+|Build Result  | Failure |  |
+|Message  | Build failed. Click on "Details" for more info.  |  |
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/aebd6f10-ec70-471d-b787-264c6360a823)
+
+## Jenkins - Creating the pipeline - Pipeline Script
+
+We can now supply our Pipeline script:
+
+``` groovy
+def MOBBURL
+
+pipeline {
+    agent any
+    
+    environment {
+        MOBB_API_KEY = credentials('MOBB_API_KEY')
+        SNYK_API_KEY = credentials('SNYK_API_KEY')
+        GITHUBREPOURL = 'https://github.com/antonychiu2/testrepo'
+    }
+    tools {
+        nodejs 'NodeJS'
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scmGit(
+                    branches: [[name: '${ghprbActualCommit}']], 
+                    extensions: [], 
+                    userRemoteConfigs: [[
+                        credentialsId: '2760a171-4592-4fe0-84da-2c2f561c8c88', 
+                        refspec: '+refs/pull/*:refs/remotes/origin/pr/*', 
+                        url: "${GITHUBREPOURL}"]]
+                        )
+
+            }
+        }
+        stage('SAST') {
+            steps {
+                sh 'npx snyk auth $SNYK_API_KEY'
+                sh 'npx snyk code test --sarif-file-output=report.json'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+            
+                script {
+                    MOBBURL = sh(returnStdout: true, script:'npx mobbdev@latest analyze -f report.json -r $GITHUBREPOURL --ref $ghprbSourceBranch --api-key $MOBB_API_KEY  --ci').trim()
+                }     
+            echo "Mobb Fix Link: ${MOBBURL}"
+            step([$class: 'GitHubCommitStatusSetter', 
+                    commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: "${ghprbActualCommit}"], 
+                    contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Mobb Fix Link'], 
+                    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/antonychiu2/testrepo'], 
+                    statusBackrefSource: [$class: 'ManuallyEnteredBackrefSource', backref: "${MOBBURL}"], 
+                    statusResultSource: [$class: 'ConditionalStatusResultSource', 
+                        results: [[$class: 'AnyBuildResult', message: 'Click on "Details" to access the Mobb Fix Link', state: 'SUCCESS']]]
+            ])
+        }
+    }
+}
+
+```
+
