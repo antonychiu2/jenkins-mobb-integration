@@ -22,11 +22,11 @@ For this integration, we need to provide the following permissions:
 * Contents - Read and Write
 * Pull Requests - Read and Write
 
-Note down the token that is generated and store it in a safe place. 
+Note down the generated GitHub PAT and store it in a safe place. 
 
 ## Generate Mobb API Key and Snyk API Key
 
-After logging into the Mobb portal, click on the "settings" icon on the bottom left, then select "Access tokens". From here, you can generate an API key by selecting the "Add API Key" button.
+After logging into the Mobb portal, click on the "Settings" icon on the bottom left, then select "Access tokens". From here, you can generate an API key by selecting the "Add API Key" button.
 
 To integrate with Snyk, you  will also need to generate a Snyk API Key. This can be achieved by following this [guide](https://docs.snyk.io/snyk-api/authentication-for-api) from Snyk documentation. 
 
@@ -41,7 +41,7 @@ The next step is to load them into Jenkins Credentials. To do so, go to "Dashboa
 
 |Credential Entry  |Credential Kind |ID |
 | ----------------- | --------------- | -- |
-| GitHub Personal Access Token (PAT)  | Secret text | `your github username` |
+| GitHub Personal Access Token (PAT)  | Secret text | <your github username> |
 | Mobb API Key  | Secret text | `MOBB_API_KEY` |
 | Snyk API Key  | Secret text | `SNYK_API_KEY` |
 
