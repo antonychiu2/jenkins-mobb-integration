@@ -81,11 +81,12 @@ The next step is to configure GitHub webhooks to publish events to Jenkins. Spec
  
 To set up the webhook, first go to your GitHub repository. Select "Settings" -> "Webhooks". 
 
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/c11e183a-d84e-4586-aab2-050d36afce9b)
+
 For the Payload URL, you want to specify your Jenkins URL in the format:
 `https:\\<JENKINS_DOMAIN>:<JENKINS_PORT>/ghprbhook/`
 
 For Content Type, select `application/json`
-![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/c11e183a-d84e-4586-aab2-050d36afce9b)
 
 For events to trigger the webhook, select "Let me select individual events". Under the event list, select "Pull requests". 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/5597944b-a119-4d6b-8cd5-73debfa7af1b)
@@ -93,7 +94,9 @@ For events to trigger the webhook, select "Let me select individual events". Und
 To verify that the Webhook is able to connect to Jenkins, go to "Recent Deliveries" tab. Verify that there is a green checkmark next to your most recent request. 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/62496a31-5a96-4ce8-becc-5ef0efa05d6b)
 
-We are finally done with the infrastructure-related configurations! Next, we will move onto configuring the actual pipeline. 
+We are finally done with the infrastructure-related configurations.
+
+ Next, we will move onto configuring the actual Jenkins pipeline. 
 
 ## Jenkins - Creating the pipeline
 
