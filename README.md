@@ -1,5 +1,5 @@
 # Sample Integration of Mobb with Snyk SAST scan in Jenkins 
-This is a sample integration that demonstrates the ease of use of the Mobb CLI (Bugsy) in a CI/CD environment. Specifically, this will demonstrate how to integrate Mobb in a Jenkins pipeline that is also conducting a SAST scan on a source code repository located on GitHub. 
+This is a sample integration that demonstrates the use of Mobb CLI (Bugsy) in a CI/CD environment. The scenario demonstrates a developer performing a pull request on a GitHub repository, which triggers a Jenkins job via GitHub webhooks. During the Jenkins Job, a Snyk SAST scan will run followed by Mobb analysis on the scan result. 
 
 # Usage
 
