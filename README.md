@@ -45,7 +45,7 @@ The next step is to load them into Jenkins Credentials. To do so, go to "Dashboa
 | Mobb API Key  | Secret text | `MOBB_API_KEY` |
 | Snyk API Key  | Secret text | `SNYK_API_KEY` |
 
-By the time you have loaded the 3 entries, you should have something similar to this:
+The result should look similar to this:
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/801d1290-9429-4423-861f-c101a1bc5b70)
 
 
@@ -56,26 +56,29 @@ This integration makes use of the following Jenkins plugins, please ensure you h
 * [GitHub Pull Request Builder](https://plugins.jenkins.io/ghprb)
 
 ## Jenkins - Configure Plugins Credentials
-The next step is to configure the plugins to ensure they are using the crednentials we've provided. Go to "Dashboard" -> "Manage Jenkins" -> "System". 
+The next step is to configure the plugins to ensure they are using the credentials entered earlier. To do so, go to "Dashboard" -> "Manage Jenkins" -> "System". 
 
-First, locate the section called **GitHub**. Provide a Name to the connection. Under the "Credentials" section, click on the drop-down and select your GitHub Credential. 
+First, locate the section called **GitHub**. 
 
-Make sure to click on the "Test Connection" to ensure Jenkins is able to access your GitHub account using the provided credentials. 
+Provide a Name to the connection. Under the "Credentials" section, click on the drop-down and select your GitHub Credential. 
+
+Click on  "Test Connection" to ensure Jenkins is able to access your GitHub account using the provided credentials. 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/0b6a871d-df33-4c54-8597-57c86cbbebdd)
 
-Second, locate the section called **GitHub Pull Request Builder**. Similar to the previous step, select your GitHub credential. Under the "Shared Secret" section, enter your GitHub Personal Access Token. Make sure to test the connection again to verify that Jenkins is able to connect to your GitHub account using the supplied credentials. 
+Second, locate the section called **GitHub Pull Request Builder**. 
+
+Select your GitHub credential. Under the "Shared Secret" section, enter your GitHub Personal Access Token. Make sure to test the connection again.
 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/027d7efb-24cf-4a15-9ec8-04efafe0cf27)
 
 ## GitHub - Create Webhook
 
-The next step is to configure Webhook for GitHub to publish events to Jenkins. Specifically, we want to trigger the Jenkins Job when there is a pull request to initiate the SAST Scan and trigger Mobb analyze to parse the result of the SAST scan. 
+The next step is to configure GitHub webhooks to publish events to Jenkins. Specifically, we want to trigger the Jenkins job when there is a pull request. The Jenkins job will initiate a SAST Scan and run a Mobb analysis on the result. 
 
 > [!NOTE]
-> GitHub must have network connectivity to your Jenkins instance in order to perform this step. Speak to your network administrator on setting up this connection. This particular sample integration was built by exposing Jenkins to the web via a secure tunnel using [Cloudflare Zerotrust Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/). 
+> GitHub must have network connectivity to your Jenkins instance in order to perform this step. Speak to your network administrator about setting up this connection. This particular sample integration was built by exposing Jenkins to the web via a secure tunnel using [Cloudflare Zerotrust Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/). 
  
-
-To setup the Webhook, first go to your GitHub repository. Select "Settings" -> "Webhooks". 
+To set up the webhook, first go to your GitHub repository. Select "Settings" -> "Webhooks". 
 
 For the Payload URL, you want to specify your Jenkins URL in the format:
 `https:\\<JENKINS_DOMAIN>:<JENKINS_PORT>/ghprbhook/`
