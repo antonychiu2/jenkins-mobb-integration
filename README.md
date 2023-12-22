@@ -201,9 +201,9 @@ Click on "Save" to save the pipeline project.
 
 The jenkins job will run when a pull request is detected in the GitHub Source Code repository that it is connected with. To test this, go to your GitHub and trigger a Pull Request by making some updates to your source code. 
 
-![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/6fcf28aa-652d-4c24-b6a6-aeb53e83691d)
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/171bad00-c5c0-4bb1-89c5-fc291e63d3b8)
 
-Once the Pull Request is initiated, the job in Jenkins should trigger (how quickly the Jenkins job triggers is dependent on your Crontab setting defined in the "GitHub Pull Request Builder" trigger step. However, when triggered, you should be able to see updates in GitHub's Pull Request page to see status of the checks:
+Once the Pull Request is initiated, the job in Jenkins should trigger (how quickly the Jenkins job triggers is dependent on your Crontab setting defined in the "GitHub Pull Request Builder" trigger step. However, when triggered, you should be able to see updates in GitHub's Pull Request page to see status of the checks. 
 
 If vulnerabilities are found by the SAST scanner, Mobb will also run to consume the results of the SAST scan. Once the analysis is ready, an URL will be provided to Mobb dashboard via the "Details" button. 
 
