@@ -67,7 +67,7 @@ Second, locate the section called **GitHub Pull Request Builder**. Similar to th
 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/027d7efb-24cf-4a15-9ec8-04efafe0cf27)
 
-## GitHub - Create Webhook
+## GitHub - Creating a Webhook
 
 The next step is to configure Webhook for GitHub to publish events to Jenkins. Specifically, we want to trigger the Jenkins Job when there is a pull request to initiate the SAST Scan and trigger Mobb analyze to parse the result of the SAST scan. 
 
