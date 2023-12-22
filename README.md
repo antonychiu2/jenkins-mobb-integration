@@ -195,4 +195,33 @@ pipeline {
 }
 
 ```
+Click on "Save" to save the pipeline project. 
+
+## Triggering the pipeline
+
+The jenkins job will run when a pull request is detected in the GitHub Source Code repository that it is connected with. To test this, go to your GitHub and trigger a Pull Request by making some updates to your source code. 
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/6fcf28aa-652d-4c24-b6a6-aeb53e83691d)
+
+Once the Pull Request is initiated, the job in Jenkins should trigger (how quickly the Jenkins job triggers is dependent on your Crontab setting defined in the "GitHub Pull Request Builder" trigger step. However, when triggered, you should be able to see updates in GitHub's Pull Request page to see status of the checks:
+
+If vulnerabilities are found by the SAST scanner, Mobb will also run to consume the results of the SAST scan. Once the analysis is ready, an URL will be provided to Mobb dashboard via the "Details" button. 
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/134f6449-ff8e-4d79-af18-13bae8f41dee)
+
+Once we arrive at the analysis page for the project, we can see a list of available fixes. Let's click on the "Link to Fix" button next to the XSS finding.
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/11248919-19ec-456d-bfc0-0caba74a21db)
+
+Mobb provides a powerful self-guided remediation engine. As a developer, all you have to do is answer a few questions and validate the fix that Mobb is proposing. From there, Mobb will take over the remediation process and commit the code on your behalf.
+
+Once you're ready, select the "Commit Changes" button.
+
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/2454da9e-b1cb-4b01-bf55-537389d994e6)
+
+As the last step, enter the name of the target branch where this merge request will be merged. And select "Commit Changes".
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/03544f61-681c-4b21-8566-fcd4739afa06)
+
+Mobb has successfully committed the remediated code back to your repository under a new branch along with a new Pull Request. Since this pipeline is configured to run on every Pull Request events, a new SAST scan will be conducted to validate the proposed changes to ensure the vulnerabilities have been remediated.
+
 
