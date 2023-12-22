@@ -41,7 +41,7 @@ The next step is to load them into Jenkins Credentials. To do so, go to "Dashboa
 
 |Credential Entry  |Credential Kind |ID |
 | ----------------- | --------------- | -- |
-| GitHub Personal Access Token (PAT)  | Secret text | <your github username> |
+| GitHub Personal Access Token (PAT)  | Secret text | your github username goes here |
 | Mobb API Key  | Secret text | `MOBB_API_KEY` |
 | Snyk API Key  | Secret text | `SNYK_API_KEY` |
 
@@ -76,20 +76,20 @@ The next step is to configure Webhook for GitHub to publish events to Jenkins. S
  
 
 To setup the Webhook, first go to your GitHub repository. Select "Settings" -> "Webhooks". 
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/c11e183a-d84e-4586-aab2-050d36afce9b)
 
 For the Payload URL, you want to specify your Jenkins URL in the format:
 `https:\\<JENKINS_DOMAIN>:<JENKINS_PORT>/ghprbhook/`
 
 For Content Type, select `application/json`
-![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/c11e183a-d84e-4586-aab2-050d36afce9b)
 
 For events to trigger the webhook, select "Let me select individual events". Under the event list, select "Pull requests". 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/5597944b-a119-4d6b-8cd5-73debfa7af1b)
 
-To verify that the Webhook is able to connect to Jenkins, go to "Recent Deliveries" tab. Verify that there is a green checkmark next to your most recent request. 
+To verify that the webhook is able to connect to Jenkins, go to "Recent Deliveries" tab. Verify that there is a green checkmark next to your most recent request. 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/62496a31-5a96-4ce8-becc-5ef0efa05d6b)
 
-We are finally done with the infrastructure-related configurations! Next, we will move onto configuring the actual pipeline. 
+We are finally done with the infrastructure-related configurations. Next, we will move onto configuring the actual pipeline. 
 
 ## Jenkins - Creating the pipeline
 
