@@ -110,26 +110,26 @@ Under the "GitHub Pull Request Builder" -> **Advanced** section, the following v
 |Name  |Value |Explanation |
 | ----------------- | --------------- | -- |
 |Crontab line  | * * * * * | This value will cause Jenkins to check for Webhook every minute. Modify this as needed. |
-| White list  | <enter your GitHub Username> | |
+| White list  | your GitHub username goes here | |
 
 Under the "GitHub Pull Request Builder" -> **Trigger Setup** section, the following values were used:
 |Name  |Value |Explanation |
 | ----------------- | --------------- | -- |
-|Commit Status Context  | Jenkins Pipeline | This will appear in GitHub commit status message |
+|Commit Status Context  | Jenkins Pipeline | This is what appears in GitHub commit status message |
 
 Under the "GitHub Pull Request Builder" -> Trigger Setup -> **Commit Status Build Result** section, add 2 sections with the following values
 
 For the first section:
 |Name  |Value |Explanation |
 | ----------------- | --------------- | -- |
-|Build Result  | Success |  |
-|Message  | SAST Scan Complete - No issues found |  |
+|Build Result  | Success | during a successful build event  |
+|Message  | SAST Scan Complete - No issues found | This is what appears in GitHub commit status message |
 
 For the second section:
 |Name  |Value |Explanation |
 | ----------------- | --------------- | -- |
 |Build Result  | Failure |  |
-|Message  | Build failed. Click on "Details" for more info.  |  |
+|Message  | Build failed. Click on "Details" for more info.  | This is what appears in GitHub commit status message during a fail build event |
 
 ![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/aebd6f10-ec70-471d-b787-264c6360a823)
 
@@ -146,7 +146,7 @@ pipeline {
     environment {
         MOBB_API_KEY = credentials('MOBB_API_KEY')
         SNYK_API_KEY = credentials('SNYK_API_KEY')
-        GITHUBREPOURL = 'https://github.com/antonychiu2/testrepo'
+        GITHUBREPOURL = 'https://github.com/antonychiu2/testrepo' //change this to your GitHub Repository URL
     }
     tools {
         nodejs 'NodeJS'
