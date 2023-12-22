@@ -155,7 +155,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scmGit(
-                    branches: [[name: '${ghprbActualCommit}']], 
+                    branches: [[name: '$ghprbActualCommit']], 
                     extensions: [], 
                     userRemoteConfigs: [[
                         credentialsId: '2760a171-4592-4fe0-84da-2c2f561c8c88', 
@@ -182,11 +182,11 @@ pipeline {
                 script {
                     MOBBURL = sh(returnStdout: true, script:'npx mobbdev@latest analyze -f report.json -r $GITHUBREPOURL --ref $ghprbSourceBranch --api-key $MOBB_API_KEY  --ci').trim()
                 }     
-            echo "Mobb Fix Link: ${MOBBURL}"
+            echo 'Mobb Fix Link: $MOBBURL'
             step([$class: 'GitHubCommitStatusSetter', 
-                    commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: "${ghprbActualCommit}"], 
+                    commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: '$ghprbActualCommit'], 
                     contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Mobb Fix Link'], 
-                    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/antonychiu2/testrepo'], 
+                    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: '$GITHUBREPOURL'], 
                     statusBackrefSource: [$class: 'ManuallyEnteredBackrefSource', backref: "${MOBBURL}"], 
                     statusResultSource: [$class: 'ConditionalStatusResultSource', 
                         results: [[$class: 'AnyBuildResult', message: 'Click on "Details" to access the Mobb Fix Link', state: 'SUCCESS']]]
