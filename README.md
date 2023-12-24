@@ -1,9 +1,25 @@
 # Sample Integration of Mobb with Snyk SAST scan in Jenkins 
 This is a sample integration that demonstrates the use of Mobb CLI (Bugsy) in a CI/CD environment. The scenario demonstrates a developer performing a pull request on a GitHub repository, which triggers a Jenkins job via GitHub webhooks. During the Jenkins Job, a Snyk SAST scan will run followed by Mobb analysis on the scan result. 
 
+# Table of Contents
+- [Sample Integration of Mobb with Snyk SAST scan in Jenkins](#sample-integration-of-mobb-with-snyk-sast-scan-in-jenkins)
+- [Table of Contents](#table-of-contents)
+- [Usage](#usage)
+  - [Register](#register)
+  - [GitHub Personal Access Token (PAT)](#github-personal-access-token-pat)
+  - [Generate Mobb API Key and Snyk API Key](#generate-mobb-api-key-and-snyk-api-key)
+  - [Jenkins - Credentials](#jenkins---credentials)
+  - [Jenkins - Plugins](#jenkins---plugins)
+  - [Jenkins - Configure Plugins Credentials](#jenkins---configure-plugins-credentials)
+  - [GitHub - Creating a Webhook](#github---creating-a-webhook)
+  - [Jenkins - Creating the pipeline](#jenkins---creating-the-pipeline)
+  - [Jenkins - Creating the pipeline - Pipeline Script](#jenkins---creating-the-pipeline---pipeline-script)
+  - [Triggering the pipeline](#triggering-the-pipeline)
+
 # Usage
 
 ## Register
+
 
 To perform this integration, you will need the following:
 
