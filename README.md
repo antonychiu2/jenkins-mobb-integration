@@ -158,7 +158,7 @@ def MOBBURL
 
 pipeline {
     agent any
-    
+    // Setting up environment variables
     environment {
         MOBB_API_KEY = credentials('MOBB_API_KEY')
         SNYK_API_KEY = credentials('SNYK_API_KEY')
@@ -168,6 +168,7 @@ pipeline {
         nodejs 'NodeJS'
     }
     stages {
+        // Checkout the source code from the branch being committed
         stage('Checkout') {
             steps {
                 checkout scmGit(
@@ -181,6 +182,7 @@ pipeline {
 
             }
         }
+        // Run SAST scan
         stage('SAST') {
             steps {
                 sh 'npx snyk auth $SNYK_API_KEY'
@@ -189,16 +191,21 @@ pipeline {
         }
     }
     post {
+        // If SAST scan complete with no issues found, pipeline is successful
         success {
             echo 'Pipeline succeeded!'
         }
+        // If SAST scan complete WITH issues found, pipeline enters fail state, triggering Mobb autofix analysis
         failure {
             echo 'Pipeline failed!'
-            
+
                 script {
-                    MOBBURL = sh(returnStdout: true, script:'npx mobbdev@latest analyze -f report.json -r $GITHUBREPOURL --ref $ghprbSourceBranch --api-key $MOBB_API_KEY  --ci').trim()
+                    MOBBURL = sh(returnStdout: true,
+                                script:'npx mobbdev@latest analyze -f report.json -r $GITHUBREPOURL --ref $ghprbSourceBranch --api-key $MOBB_API_KEY  --ci')
+                                .trim()
                 }     
             echo 'Mobb Fix Link: $MOBBURL'
+            // Provide a "Mobb Fix Link" in the GitHub pull request page as a commit status
             step([$class: 'GitHubCommitStatusSetter', 
                     commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: '$ghprbActualCommit'], 
                     contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'Mobb Fix Link'], 
