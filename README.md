@@ -224,7 +224,7 @@ Once the Pull Request is initiated, the job in Jenkins should trigger (how quick
 
 If vulnerabilities are found by the SAST scanner, Mobb will also run to consume the results of the SAST scan. Once the analysis is ready, an URL will be provided to Mobb dashboard via the "Details" button. 
 
-![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/134f6449-ff8e-4d79-af18-13bae8f41dee)
+![image](https://github.com/antonychiu2/jenkins-mobb-integration/assets/5158535/0959c0bf-14d5-46f4-a7ab-ea8ef8d64361)
 
 Once we arrive at the analysis page for the project, we can see a list of available fixes. Let's click on the "Link to Fix" button next to the XSS finding.
 
