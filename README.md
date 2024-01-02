@@ -90,7 +90,7 @@ Second, locate the section called **GitHub Pull Request Builder**. Similar to th
 The next step is to configure Webhook for GitHub to publish events to Jenkins. Specifically, we want to trigger the Jenkins Job when there is a pull request to initiate the SAST Scan and trigger Mobb analyze to parse the result of the SAST scan. 
 
 > [!NOTE]
-> GitHub must have network connectivity to your Jenkins instance in order to perform this step. Speak to your network administrator on setting up this connection. This particular sample integration was built by exposing Jenkins to the web via a secure tunnel using [Cloudflare Zerotrust Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/). 
+> GitHub must have network connectivity to your Jenkins instance in order to perform this step. Speak to your network administrator on setting up this connection. For ease of demo, this particular sample integration was built by exposing Jenkins to GitHub Cloud via a secure tunnel using [Cloudflare Zerotrust Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/). 
  
 
 To setup the Webhook, first go to your GitHub repository. Select "Settings" -> "Webhooks". 
