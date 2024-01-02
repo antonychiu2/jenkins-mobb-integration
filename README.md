@@ -70,6 +70,8 @@ By the time you have loaded the 3 entries, you should have something similar to 
 This integration makes use of the following Jenkins plugins, please ensure you have these installed in your Jenkins environment:
 * [GitHub Plugin](https://plugins.jenkins.io/github)
 * [GitHub Pull Request Builder](https://plugins.jenkins.io/ghprb)
+* [NodeJS](https://plugins.jenkins.io/nodejs/)
+
 
 ## Jenkins - Configure Plugins Credentials
 The next step is to configure the plugins to ensure they are using the crednentials we've provided. Go to "Dashboard" -> "Manage Jenkins" -> "System". 
